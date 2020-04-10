@@ -1,13 +1,18 @@
 'use strict';
+
+const memo = new Map();
+memo.set(0, 0);
+memo.set(1, 1);
+
 function fib(n) {
-  if (n === 0) {
-    return 0;
-  } else if (n === 1) {
-    return 1;
+  if (memo.has(n)) {
+    return memo.get(n);
   }
-  return fib(n - 1) + fib(n - 2);
+  const value = fib(n - 1) + fib(n - 2);
+  memo.set(n, value);
+  return value;
 }
 
-const length = process.argv[2] || 10;
-let num = Number(length);
-[...Array(num).keys()].map((i) => console.log(i + ' = ', fib(i)));
+const length = Number(process.argv[2] || 10);
+// const num = length;
+[...Array(length).keys()].map((i) => console.log(i + ' = ', fib(i)));
